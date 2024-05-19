@@ -1,2 +1,2 @@
-# GEOG-357-Project
-Repo for GEOG 357 group projeect
+# CS-338-Project
+Repo for CS 338 group projeect
