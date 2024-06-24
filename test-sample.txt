@@ -1,0 +1,15 @@
+Obligation_Amount,Outlayed_Amount,Prime_Award_ID
+3000,200,2015FBI03A
+2000,500,2021CIA19D
+
+Obligation_Amount,Outlayed_Amount,Primary_Place,Agency_Identifier,Prime_Award_ID
+2000,500,Montana,CIA,2021CIA19D
+
+Number_of_Awards,sum(Obligation_Amount),sum(Outlayed_Amount)
+2,8500,3500
+
+Obligation_Amount,Outlayed_Amount,Primary_Place,Agency_Identifier,Prime_Award_ID
+3000,200,California,FBI,2015FBI03A
+6500,3000,Illinois,CIA,2019CIA06M
+2000,500,Montana,CIA,2021CIA19D
+15000,10000,Washington,DOD,2022DOD45B
