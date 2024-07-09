@@ -4,7 +4,7 @@ Repo for CS 338 group 15 project
 Sample_Database_Creation.sql contains all the code required to generate the database schema and a sample dataset, to be run while working in an empty database.
 test-sample.sql contains the sample queries to be run on the generated sample dataset, with test-sample.txt containing the outputs for the sample queries. The Covid-19 award filter calls a predefined database procedure that is also included in the file. Outlier locations was modified to only show the first and last records as the sample dataset was too small otherwise.
 
-The database application can be run using php, by running a localhost server on the php folder and accessing it using any web browser http://localhost:8000. Currently the available features are 1. searching for award using Prime_award_ID. 2. Filter awards based on their covid-19 status. and 3. Viewing top 5 program activities.
+The database application can be run using php, by running a localhost server on the php folder and accessing it using any web browser http://localhost:8000. Currently the available features are 1. searching for award using Prime_award_ID. 2. Filter awards based on their covid-19 status. and 3. Viewing top 5 and bottom 5 states in terms of outlayed amounts.
 
 Production_Database_Creation.sql contains all the code to to set up a production database in preperation to populate it with production data.
 
