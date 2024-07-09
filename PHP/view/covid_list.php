@@ -11,9 +11,9 @@ if (isset($_POST['submit'])) {
 
     $connection = new PDO($dsn, $username, $password);
 
-    $award_ID = $_POST['award_ID'];
+    $covid_status = $_POST['covid_status'];
 
-    $result = lookup_award($award_ID);
+    $result = lookup_covid($covid_status);
   } catch(PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
   }
@@ -28,11 +28,9 @@ if (isset($_POST['submit'])) {
 
     <table>
       <thead>
-<tr>
+<tr>  
   <th>Obligation Amount</th>
   <th>Outlayed Amount</th>
-  <th>Primary Place</th>
-  <th>Agency Identifier</th>
   <th>Prime Award ID</th>
 </tr>
       </thead>
@@ -41,25 +39,29 @@ if (isset($_POST['submit'])) {
       <tr>
 <td><?php echo escape($row["Obligation_Amount"]); ?></td>
 <td><?php echo escape($row["Outlayed_Amount"]); ?></td>
-<td><?php echo escape($row["Primary_Place"]); ?></td>
-<td><?php echo escape($row["Agency_Identifier"]); ?></td>
 <td><?php echo escape($row["Prime_Award_ID"]); ?></td>
       </tr>
     <?php } ?>
       </tbody>
   </table>
   <?php } else { ?>
-    > No results found for <?php echo escape($_POST['award_ID']); ?>.
+    > No results found for <?php echo escape($_POST['covid_status']); ?>.
   <?php }
 } ?>
 
-<h2>Find award based on ID</h2>
+<h2>Browse awards based on Covid-status</h2>
 
-<form method="post">
-  <label for="award_ID">Award ID</label>
-  <input type="text" id="award_ID" name="award_ID">
-  <input type="submit" name="submit" value="View Results">
+<form method="post" id="list__header_select" class="list__header_select">
+    <input type="hidden" name="action" value="list_assignments">
+    <select name="covid_status" required>
+        <option value="0">View All</option>
+        <option value="1">Covid-related</option>
+        <option value="2">Non Covid-related</option>
+        <option value="3">Both</option>
+    </select>
+    <input type="submit" name="submit" value="View Results">
 </form>
+
 
 <?php include('footer.php') ?>
 

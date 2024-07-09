@@ -1,0 +1,47 @@
+Primary_Place
+Outlayed Amount
+DISTRICT OF COLUMBIA
+999999.99
+VIRGINIA
+999999.59
+TEXAS
+999999.0
+VIRGINIA
+999997.65
+DISTRICT OF COLUMBIA 999992.16
+
+
+Obligation_Amount Outlayed Amount Primary_Place
+4866.64
+HULL
+Agency Identifier Prime_Award_ID
+CONNECTICUT
+97
+Object_Class
+SPE4A622FA89L
+26.0: Supplies and materials
+
+
+Obligation_Amount Outlayed_Amount Prime_Award_ID
+7762411.67
+NULL
+0001
+6688650.81
+NULL
+0002
+2107152.62
+745719.86
+0003
+NULL
+7652300.92
+0004
+21642321.54
+6315281.06
+0005
+NULL
+845027.82
+0006
+520156.0
+NULL
+00063200201DNBCHC020009
+more columns are truncated
