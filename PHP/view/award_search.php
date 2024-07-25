@@ -4,17 +4,25 @@
 require('../model/database.php');
 require('../model/award_db.php');
 
+$connection = new PDO($dsn, $username, $password);
+$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+try {
+  // Fetch all Award IDs for the dropdown
+  $query = "SELECT DISTINCT Prime_Award_ID FROM Award";
+  $stmt = $connection->prepare($query);
+  $stmt->execute();
+  $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch(PDOException $error) {
+  echo "Error fetching award IDs: " . $error->getMessage();
+}
+
 if (isset($_POST['submit'])) {
   try {
     require "common.php";
 
-    $connection = new PDO($dsn, $username, $password);
-    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $covid_status = $_POST['covid_status'];
-    $amount_range = $_POST['amount_range'];
-
-    $result = lookup_covid($covid_status, $amount_range);
+    $award_ID = $_POST['award_ID'];
+    $result = lookup_award($award_ID);
   } catch(PDOException $error) {
     echo $sql . "<br>" . $error->getMessage();
   }
@@ -47,18 +55,14 @@ if (isset($_POST['submit'])) {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 20px;
     }
-    .form-group {
-      margin-bottom: 15px;
+    label {
+      margin-top: 10px;
+      text-align: left;
       width: 100%;
     }
-    .form-group label {
-      margin-bottom: 5px;
-      text-align: left;
-      display: block;
-    }
-    select, input[type="submit"] {
+    select, input[type="text"], input[type="submit"] {
+      margin-top: 5px;
       padding: 8px;
       border-radius: 4px;
       border: 1px solid #ccc;
@@ -90,29 +94,18 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
   <div class="container">
-    <h2>Browse awards based on Covid-status and Outlayed Amount</h2>
+    <h2>Find award based on ID</h2>
 
-    <form method="post" id="list__header_select" class="list__header_select">
-      <div class="form-group">
-        <label for="amount_range">Select Outlayed Amount Range</label>
-        <select name="amount_range" id="amount_range" required>
-          <option value="0-5000000">0-5000000</option>
-          <option value="5000001-10000000">5000001-10000000</option>
-          <option value="10000001-15000000">10000001-15000000</option>
-          <option value="15000001-20000000">15000001-20000000</option>
-          <option value="20000001-25000000">20000001-25000000</option>
-          <option value="25000001+">25000001+</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="covid_status">Select Covid Status</label>
-        <select name="covid_status" id="covid_status" required>
-          <option value="0">View All</option>
-          <option value="1">Covid-related</option>
-          <option value="2">Non Covid-related</option>
-          <option value="3">Both</option>
-        </select>
-      </div>
+    <form method="post">
+      <label for="award_ID">Award ID</label>
+      <select id="award_ID" name="award_ID">
+        <option value="">Select an award ID</option>
+        <?php foreach ($awards as $award) : ?>
+          <option value="<?php echo htmlspecialchars($award['Prime_Award_ID']); ?>">
+            <?php echo htmlspecialchars($award['Prime_Award_ID']); ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
       <input type="submit" name="submit" value="View Results">
     </form>
 
@@ -123,19 +116,27 @@ if (isset($_POST['submit'])) {
         <table>
           <thead>
             <tr>
+              <th>Obligation Amount</th>
+              <th>Outlayed Amount</th>
+              <th>Primary Place</th>
+              <th>Agency Identifier</th>
               <th>Prime Award ID</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($result as $row) { ?>
               <tr>
-                <td><?php echo htmlspecialchars($row["AwardID"]); ?></td>
+                <td><?php echo htmlspecialchars($row["Obligation_Amount"]); ?></td>
+                <td><?php echo htmlspecialchars($row["Outlayed_Amount"]); ?></td>
+                <td><?php echo htmlspecialchars($row["Primary_Place"]); ?></td>
+                <td><?php echo htmlspecialchars($row["Agency_Identifier"]); ?></td>
+                <td><?php echo htmlspecialchars($row["Prime_Award_ID"]); ?></td>
               </tr>
             <?php } ?>
           </tbody>
         </table>
       <?php } else { ?>
-        <p>No results found for the selected criteria.</p>
+        <p>No results found for <?php echo htmlspecialchars($_POST['award_ID']); ?>.</p>
       <?php }
     }
     ?>

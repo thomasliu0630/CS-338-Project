@@ -1,0 +1,14 @@
+{
+  "name": "1f87a47ee78be9c1",
+  "main": "1f87a47ee78be9c1@635.js",
+  "version": "635.0.0",
+  "homepage": "https://observablehq.com/d/1f87a47ee78be9c1",
+  "author": {
+    "name": "Justin Lee",
+    "url": "https://observablehq.com/@justin-lee"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

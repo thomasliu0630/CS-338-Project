@@ -2,7 +2,7 @@
 <html>
 <body>
 <?php
-$dsn = 'mysql:host=localhost;dbname=afinaltest2';
+$dsn = 'mysql:host=localhost;dbname=finaldropna2';
 $username = 'sujaya';
 $password = 'Password0!';
 

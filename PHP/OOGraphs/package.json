@@ -1,0 +1,14 @@
+{
+  "name": "e045390972e63e59",
+  "main": "e045390972e63e59@471.js",
+  "version": "471.0.0",
+  "homepage": "https://observablehq.com/d/e045390972e63e59",
+  "author": {
+    "name": "Thomas Liu",
+    "url": "https://observablehq.com/@thomas-liu"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

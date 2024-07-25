@@ -4,20 +4,24 @@
 require('../model/database.php');
 require('../model/award_db.php');
 
+try {
+  require "common.php";
+
+  $connection = new PDO($dsn, $username, $password);
+  $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  // Fetch distinct values for the dropdown
+  $query = "SELECT DISTINCT Agency_Identifier, Agency_Name FROM Agency";
+  $stmt = $connection->prepare($query);
+  $stmt->execute();
+  $agencies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch(PDOException $error) {
+  echo $sql . "<br>" . $error->getMessage();
+}
+
 if (isset($_POST['submit'])) {
-  try {
-    require "common.php";
-
-    $connection = new PDO($dsn, $username, $password);
-    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $covid_status = $_POST['covid_status'];
-    $amount_range = $_POST['amount_range'];
-
-    $result = lookup_covid($covid_status, $amount_range);
-  } catch(PDOException $error) {
-    echo $sql . "<br>" . $error->getMessage();
-  }
+  $agency_ID = $_POST['Agency'];
+  $result = agency_performance($agency_ID);
 }
 ?>
 
@@ -90,30 +94,21 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
   <div class="container">
-    <h2>Browse awards based on Covid-status and Outlayed Amount</h2>
+    <h2>Look up Agency Performance</h2>
 
-    <form method="post" id="list__header_select" class="list__header_select">
+    <form method="post" action="">
       <div class="form-group">
-        <label for="amount_range">Select Outlayed Amount Range</label>
-        <select name="amount_range" id="amount_range" required>
-          <option value="0-5000000">0-5000000</option>
-          <option value="5000001-10000000">5000001-10000000</option>
-          <option value="10000001-15000000">10000001-15000000</option>
-          <option value="15000001-20000000">15000001-20000000</option>
-          <option value="20000001-25000000">20000001-25000000</option>
-          <option value="25000001+">25000001+</option>
+        <label for="Agency">Agency:</label>
+        <select id="Agency" name="Agency" required>
+          <option value="">Select an agency</option>
+          <?php foreach ($agencies as $agency) : ?>
+            <option value="<?php echo htmlspecialchars($agency['Agency_Identifier']); ?>">
+              <?php echo htmlspecialchars($agency['Agency_Name']); ?>
+            </option>
+          <?php endforeach; ?>
         </select>
       </div>
-      <div class="form-group">
-        <label for="covid_status">Select Covid Status</label>
-        <select name="covid_status" id="covid_status" required>
-          <option value="0">View All</option>
-          <option value="1">Covid-related</option>
-          <option value="2">Non Covid-related</option>
-          <option value="3">Both</option>
-        </select>
-      </div>
-      <input type="submit" name="submit" value="View Results">
+      <input type="submit" name="submit" value="Submit">
     </form>
 
     <?php
@@ -122,20 +117,24 @@ if (isset($_POST['submit'])) {
         <h2>Results</h2>
         <table>
           <thead>
-            <tr>
-              <th>Prime Award ID</th>
+            <tr>  
+              <th>Number of Awards</th>
+              <th>Obligated Amount Sum</th>
+              <th>Outlayed Amount Sum</th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ($result as $row) { ?>
               <tr>
-                <td><?php echo htmlspecialchars($row["AwardID"]); ?></td>
+                <td><?php echo htmlspecialchars($row["Total_Number_of_Awards"]); ?></td>
+                <td><?php echo htmlspecialchars($row["Total_Obligated_Amount"]); ?></td>
+                <td><?php echo htmlspecialchars($row["Total_Outlayed_Amount"]); ?></td>
               </tr>
             <?php } ?>
           </tbody>
         </table>
       <?php } else { ?>
-        <p>No results found for the selected criteria.</p>
+        <p>No results found for <?php echo htmlspecialchars($_POST['agency_ID']); ?>.</p>
       <?php }
     }
     ?>
