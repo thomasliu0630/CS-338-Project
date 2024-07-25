@@ -1,7 +1,7 @@
 <?php
 include('header.php');
 require('../model/award_db.php');
-require('../model/database2.php');
+require('../model/database.php');
 ?>
 
 <?php
