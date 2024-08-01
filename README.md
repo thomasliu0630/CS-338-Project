@@ -4,7 +4,9 @@ Repo for CS 338 group 15 project
 Sample_Database_Creation.sql contains all the code required to generate the database schema and a sample dataset, to be run while working in an empty database.
 test-sample.sql contains the sample queries to be run on the generated sample dataset, with test-sample.txt containing the outputs for the sample queries. The Covid-19 award filter calls a predefined database procedure that is also included in the file. Outlier locations was modified to only show the first and last records as the sample dataset was too small otherwise.
 
-The database application can be run using php, by running a localhost server on the php folder and accessing it using any web browser http://localhost:8000. Currently the available features are 1. searching for award using Prime_award_ID. 2. Filter awards based on their covid-19 status. and 3. Viewing top 5 and bottom 5 states in terms of outlayed amounts.
+The database application can be run using php, by running a localhost server on the php folder and accessing it using any web browser http://localhost:8000.
+Currently there are 6 basic features: 1. Award ID Finder (searching based on amount range and covid-relatedness). 2. Award search by ID. 3. Look up program activities by recipient. 4. Update recipient information. 5. Look up average outlayed and obligated amounts by federal account. 6. Look up agency performance (# of awards, total outlayed and total obligated amounts.
+There are also 5 fancy features: 1. Visual data chart of top performing agencies. 2. Boxplots comparing two agencies by their covid and non-covid related expenditures. 3. Thematic map showing the distrbution of federal funds across states. 4. Multi-attribute filter search. 5. Look up award based on completion rate, agency, and program.
 
 Production_Database_Creation.sql contains all the code to to set up a production database in preperation to populate it with production data.
 
